@@ -1,0 +1,183 @@
+{% include "Website/style_atas_halaman.html" %}
+
+<style type="text/css">
+    /* STATUS AKTIF */
+    .button-bayar {
+        padding: 8px 15px;
+        box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+        line-height: 1.20;
+        background: darkcyan;
+        font-size: 12px;
+    }
+</style>
+
+<div id="templatemo_main">
+    <div id="sidebar" class="float_l">
+        <div class="sidebar_box"><span class="bottom"></span>
+            <h3>Kategori</h3>
+            <div class="content">
+                <ul class="sidebar_list">
+                    {% for select in select_jenis %}
+                    <li class="first">
+                        <form method="get" action="{% url 'Halaman' %}">
+                            <input type="hidden" name="cari_jenis" value="{{select.jenis}}">
+                            <button type="submit" class="btn btn-info" style="width: 100%">{{select.jenis}}</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div id="content" class="float_r" style="width: 500pt">
+        <div class="product_box1">
+            <h3 align="left">Proses Pembayaran Pemesanan Kambing</h3>
+            <div id="contact_form">
+                <form method="post" name="contact" action="{% url 'payment' %}" enctype="multipart/form-data" id="payment-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{tampil.id}}">
+                    <input type="hidden" name="noktp" value="{{tampil.noktp}}">
+                    <input type="hidden" name="nama_lengkap" value="{{tampil.nama_lengkap}}">
+                    <label for="author">Jenis Kambing:</label>
+                    <input type="text" name="jenis" class="required input_field" value="{{tampil.jenis}}" readonly />
+                    <div class="cleaner h10"></div>
+                    <input type="hidden" id="harga" name="harga" class="required input_field" value="{{tampil.harga}}" readonly />
+
+                    <label for="author">Jumlah Pesanan:</label>
+                    <input type="number" id="jumlah" name="jumlah" class="required input_field" placeholder="0" maxlength="16" value="{{tampil.jumlah}}" readonly />
+                    <div class="cleaner h10"></div>
+
+                    <label for="author">Total Pesanan:</label>
+                    <input type="hidden" name="total" value="{{tampil.total}}">
+                    <input type="text" id="total" class="required input_field" maxlength="16" style="height: 30px; font-size: 15px;" placeholder="0" readonly value="{{tampil.total}}" onkeyup="sum()" />
+                    <div class="cleaner h10"></div>
+
+                    {% comment %} <div style="width: 100%">
+                        <label for="author">Pilih Transfer BANK:</label>
+                        <label>
+                            <input type="radio" name="keterangan" value="BRI"> <b>(BRI)</b>
+                        </label>
+                        <label>
+                            <input type="radio" name="keterangan" value="MANDIRI"> <b>(MANDIRI)</b>
+                        </label>
+                        <label>
+                            <input type="radio" name="keterangan" value="BNI"> <b>(BNI)</b>
+                        </label>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="cleaner h10"></div>
+
+                    <label for="author">Bayar Pesanan:</label>
+                    <input type="text" id="bayar" name="bayar" class="required input_field" maxlength="16" style="height: 60px; font-size: 25px;" placeholder="0" onkeyup="sum()" />
+                    <div class="cleaner h10"></div> {% endcomment %}
+
+                    {% comment %} <p>Unggah Bukti Transfer:</p>
+                    <input type="file" name="file_tf" class="required input_field" />
+                    <div class="cleaner h10"></div>
+
+                    <input type="hidden" id="hasil" readonly class="required input_field" maxlength="16" style="height: 60px; font-size: 25px;" placeholder="0" onkeyup="sum()" />
+                    <div class="cleaner h10"></div> {% endcomment %}
+
+                    <div align="left">
+                        <button type="submit" class="button-bayar">Bayar Sekarang</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="cleaner"></div>
+</div> <!-- AKHIR dari templatemo_main -->
+
+{% include "Website/style_bawah_halaman.html" %}
+<script type="text/javascript">
+    // Fungsi untuk menghitung sisa jumlah
+    function sum() {
+        var total = document.getElementById('total').value;
+        var bayar = document.getElementById('bayar').value;
+        var hasil = (total) - (bayar);
+        if (!isNaN(hasil)) {
+            document.getElementById('hasil').value = hasil;
+        }
+    }
+
+    // Fungsi untuk mengirim pesan ke Telegram
+    function sendToTelegram(message) {
+        var botToken = '7515898372:AAHtEoOgoZMDV6SLxP4q-GIFnP_6YXtsvv4'; // Ganti dengan token bot Anda
+        var chatId = '1215688036';
+        var url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+        var data = {
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'Markdown'
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => console.log('Berhasil:', data))
+        .catch((error) => console.error('Error:', error));
+    }
+
+    // Fungsi untuk menangani pengiriman formulir
+    function onSubmitForm(event) {
+        event.preventDefault(); // Mencegah pengiriman formulir default
+
+        // Mengumpulkan data formulir
+        var form = document.getElementById('payment-form');
+        var formData = new FormData(form);
+        
+        // Mengumpulkan data formulir untuk Telegram
+        var jenis = formData.get('jenis');
+        var jumlah = formData.get('jumlah');
+        var harga = formData.get('harga');
+        var total = formData.get('total');
+        var bayar = formData.get('bayar');
+        var keterangan = formData.get('keterangan');
+
+        var message = `
+            Jenis Kambing: ${jenis}
+            Jumlah Pesanan: ${jumlah}
+            Harga: ${harga}
+            Total: ${total}
+            Bayar: ${bayar}
+            Keterangan Transfer: ${keterangan}
+        `;
+
+        // Kirim pesan ke Telegram
+        sendToTelegram(message);
+
+        // Proses pembayaran dan redirect setelah jeda
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{csrf_token}}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.payment_url) {
+                window.open(data.payment_url, '_blank'); // Buka URL pembayaran di tab baru
+                setTimeout(() => {
+                    window.location.href = '{% url "check_pembayaran" %}'; // Redirect ke homepage setelah pembayaran
+                }, 1000);
+            } else if (data.error) {
+                alert('Error: ' + data.error);
+                console.error('Error:', data.error);
+            }
+        })
+        .catch(error => {
+            alert('Terjadi kesalahan: ' + error.message);
+            console.error('Terjadi kesalahan:', error);
+        });
+    }
+
+    document.getElementById('payment-form').onsubmit = onSubmitForm;
+</script>

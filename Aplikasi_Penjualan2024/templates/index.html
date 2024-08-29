@@ -1,0 +1,93 @@
+  {% include "style_atas.html" %}
+   <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+
+          <div class="row">
+            <div class="col-xl-6 grid-margin stretch-card flex-column">
+                <h5 class="mb-2 text-titlecase mb-4">Halaman Utama UD. Putra Alam Situbondo</h5>
+              <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <p class="mb-0 text-muted">Jumlah Pelanggan Yang Registrasi</p>
+                        
+                      </div>
+                      <h4>({{jml_pelanggan}})%</h4>
+                      <canvas class="mt-auto" height="65"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <p class="mb-0 text-muted">Jumlah Pemesanan</p>
+                        
+                      </div>
+                      <h4>({{jml_pemesanan}})%</h4>
+                      <canvas class="mt-auto" height="65"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-xl-6 grid-margin stretch-card flex-column">
+              <h5 class="mb-2 text-titlecase mb-4">Daftar Pemesanan</h5>
+              <div class="row h-100">
+                <div class="col-md-12 stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table data-table table-bordered table-striped">
+                        <thead class="table-info">
+                           <tr>
+                              <th>No</th>
+                              <th>Proses Pengiriman</th>
+                              <th>Pelanggan</th>
+                              <th class="text-center">Jenis</th>
+                              <th>Jumlah Pesanan</th>
+                              <th>Total</th>
+                              <th>Tgl Pesan</th>
+                              <th>Status</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for tampil in Tampil %}
+                           <tr>
+                              <td>{{forloop.counter}}</td>
+                              <td class="text-center">
+                                 <a href="#" data-toggle="modal" data-target="#bs-example-modal-lg{{tampil.id}}" class="btn btn-sm hor-grd btn-info">
+                                    <i class="fa fa-file"></i> Proses Pengiriman</a>
+                              </td>
+                              <td>{{tampil.nama_lengkap}}</td>
+                              <td>{{tampil.jenis}}</td>
+                              <td>{{tampil.jumlah}}</td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.total}}</b></td>
+                              <td>{{tampil.tgl_pesanan}}</td>
+                              <td>{{tampil.status}}
+                                 <form method="post" action="{% url 'Data_pembayaran' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="cari" value="{{tampil.noktp}}">
+                                  <button type="submit" class="btn btn-sm hor-grd btn-info" title="Check Sekarang">
+                                    <i class="fa fa-check"></i></button>
+                                 </form>
+                              </td>
+                                 </tr>
+                                 {% include "Master_data/data_pengiriman/tambah.html" %} 
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      {% include "style_bawah.html" %}

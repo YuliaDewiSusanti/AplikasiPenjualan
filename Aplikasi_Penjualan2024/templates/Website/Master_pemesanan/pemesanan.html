@@ -1,0 +1,127 @@
+  
+  {% include "Website/style_atas_halaman.html" %} 
+<style type="text/css">
+    .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+  .button {
+   padding: 8px 15px;
+   box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+   line-height: 1.20;
+   background: darkred;
+   font-size: 12px;
+   }
+   .button-bayar {
+   padding: 8px 15px;
+   box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.5);
+   line-height: 1.20;
+   background: darkcyan;
+   font-size: 12px;
+   }
+</style>
+  <div id="templatemo_main">
+        <div id="sidebar" class="float_l">
+            <div class="sidebar_box"><span class="bottom"></span>
+                <h3>Categories</h3>   
+                <div class="content">
+                    
+                    <ul class="sidebar_list">
+                        {% for select in select_jenis %}
+                        <li class="first">
+                            <form method="get" action="{% url 'Halaman' %}">
+                                
+                            <input type="hidden" name="cari_jenis" value="{{select.jenis}}">
+                            <button type="submit" class="btn btn-info" style="width: 100%">{{select.jenis}}</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+        <div id="content" class="float_r">
+            <h1> Daftar Pemesanan</h1>
+            <div class="product_box1" style="width: 500pt">
+                {% if messages %}
+                     {% for info in messages %}
+                     <div class="alert alert-success">
+                        <strong>Success!</strong> {{info}} 
+                     </div>
+
+                     {% endfor %}
+                     {% endif %}
+                <table id="datatable" class="styled-table">
+                        <thead class="table-info">
+                           <tr>
+                              <th>No</th>
+                              <th class="text-center">Jenis</th>
+                              <th>Harga</th>
+                              <th>Jumlah Pesanan</th>
+                              <th>Total</th>
+                              <th>Tgl Pesan</th>
+                              <th>Proses Bayar</th>
+                              <th>Delete</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for tampil in Tampil %}
+                           <tr>
+                              <td>{{forloop.counter}}</td>
+                              <td>{{tampil.jenis}}</td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.harga}}</b></td>
+                              <td>{{tampil.jumlah}}</td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.total}}</b></td>
+                              <td>{{tampil.tgl_pesanan}}</td>
+                              <td class="text-center">
+                                <a style="color: white;" href="{% url 'proses_pembayaran' tampil.id %}" class="button-bayar" onclick="return confirm('Silakan Proses Pembayaran')">
+                                    Payment</a>
+                                
+                              </td>
+                              <td>
+                                <a style="color: white;" href="{% url 'Hapus_pesanan' tampil.id %}" class="button" onclick="return confirm('Silakan Hapus Pesanan Anda')">
+                                    Delete</a>
+                              </td>
+                                 </tr>
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+            </div>          
+            
+        </div>
+
+        <div class="cleaner"></div>
+    </div> <!-- END of templatemo_main -->
+
+    
+    {% include "Website/style_bawah_halaman.html" %}

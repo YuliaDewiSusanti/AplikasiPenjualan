@@ -1,0 +1,49 @@
+{% include "style_atas.html" %}
+<div class="main-panel">
+          <div class="content-wrapper">
+         <div class="row">
+            <div class="col-sm-12 col-lg-8">
+               <div class="card">
+                  <div class="card-header d-flex justify-content-between">
+                     <div class="header-title">
+                        <h4 class="card-title"><i class="fa fa-plus"></i> TAMBAH JENIS KAMBING</h4>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                     <form class="needs-validation" novalidate method="post">
+                        {% csrf_token %}
+                        <div class="form-row">
+                           <div class="col-md-12 mb-3">
+                              <label for="validationCustom01">Jenis</label>
+                              <input type="text" class="form-control" id="validationCustom01"  required name="jenis" placeholder="Masukkan Jenis" >
+                              <div class="valid-feedback">
+                                 Jenis Harus Di Isi
+                              </div>
+                           </div>
+                           <div class="col-md-12 mb-3">
+                              <label for="validationCustom01">Harga Di Jual</label>
+                              <input type="number" class="form-control" id="validationCustom01"  required name="harga" placeholder="Masukkan Harga" >
+                              <div class="valid-feedback">
+                                 Harga Harus Di Isi
+                              </div>
+                           </div>
+                           {% comment %} <div class="col-md-12 mb-3">
+                              <label for="validationCustom01">Satuan Kambing</label> {% endcomment %}
+                              <input type="hidden" class="form-control" id="validationCustom01"  required name="satuan" placeholder="Masukkan Satuan Kambing" >
+                              {% comment %} <div class="valid-feedback">
+                                 Satuan Kambing Harus Di Isi
+                              </div>
+                           </div> {% endcomment %}
+                           
+
+                        </div>
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Submit</button>
+                        <a href="{% url 'Jenis' %}" class="btn btn-warning"><i class="fa fa-close"></i> Kembali</a>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% include "style_bawah.html" %}

@@ -1,0 +1,62 @@
+{% include "style_atas.html" %}
+  <div class="main-panel">        
+        <div class="content-wrapper">
+            <div class="row ">
+              <div class="col-xl-12 grid-margin stretch-card flex-column">
+               <h5 class="mb-2 text-titlecase mb-4"><i class="fa fa-file"></i> Form Tabel Data Pembayaran Kambing</h5>               
+                <div class="card ">         
+                  <div class="card-body">
+                     {% if messages %}
+                     {% for info in messages %}
+                     <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <i class="icofont icofont-close-line-circled"></i>
+                        </button>
+                        <strong>Success!</strong> {{info}} 
+                     </div>
+
+                     {% endfor %}
+                     {% endif %}
+                     <div class="table-responsive">
+                        <table id="datatable" class="table data-table table-bordered table-striped">
+                        <thead class="table-info">
+                           <tr>
+                              <th>No</th>
+                              
+                              <th>Jenis</th>
+                              <th>Jumlah Pesanan</th>
+                              <th>Total</th>
+                              <th>Jumlah Bayar</th>
+                              <th>Tgl Bayar</th>
+                              <th>Keterangan</th>
+                              <th>Bukti (TF)</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for tampil in Tampil %}
+                           <tr>
+                              <td>{{forloop.counter}}</td>
+                              
+                              <td>{{tampil.jenis}}</td>
+                              <td>{{tampil.jumlah}}</td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.total}}</b></td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.bayar}}</b></td>
+                              <td>{{tampil.tgl_pembayaran}}</td>
+                              <td>{{tampil.keterangan}}</td>
+                              <td>
+                                 <a href="{{ tampil.file_tf.url }}" target="_blank">
+                                  <img src="{{ tampil.file_tf.url }}" style="width: 50px"></a>
+                              </td>
+                                 </tr>
+                                 
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+{% include "style_bawah.html" %}

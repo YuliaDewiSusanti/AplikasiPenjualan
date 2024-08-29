@@ -1,0 +1,54 @@
+  
+  {% include "Website/style_atas_halaman.html" %} 
+
+  <div id="templatemo_main">
+        <div id="sidebar" class="float_l">
+            <div class="sidebar_box"><span class="bottom"></span>
+                <h3>Categories</h3>   
+                <div class="content">
+                    
+                    <ul class="sidebar_list">
+                        {% for select in select_jenis %}
+                        <li class="first">
+                            <form method="get" action="{% url 'Halaman' %}">
+                            <input type="hidden" name="cari_jenis" value="{{select.jenis}}">
+                            <button type="submit" class="btn btn-info" style="width: 100%">{{select.jenis}}</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+        <div id="content" class="float_r">
+            <h1> Jenis Kambing</h1>
+            <div class="product_box">
+                <a href="productdetail.html"><img src="{{ tampil.foto.url }}" alt="Shoes 1" style="width:90%" /></a>
+            </div>          
+            <div class="product_box">
+                <h3>{{tampil.jenis}}</h3>
+                <table style="width:100%; font-size: 15px;">
+                    <tr>
+                        <td>Usia</td><td>:</td><td>{{tampil.usia}}</td>
+                    </tr>
+                    <tr>
+                        <td>Tinggi</td><td>:</td><td>{{tampil.tinggi}}</td>
+                    </tr>
+                    <tr>
+                        <td>Stock</td><td>:</td><td>{{tampil.stock}}</td>
+                    </tr>
+                </table>
+                <hr>
+            <p class="product_price"><small>RP.</small> {{tampil.harga}}</p>
+                <b>Keterangan :</b><br> {{tampil.keterangan}}
+
+            </div> 
+            <a href="{% url 'tambah_pesanan' tampil.id %}" class="addtocart"></a>
+        </div>
+
+        <div class="cleaner"></div>
+    </div> <!-- END of templatemo_main -->
+
+    
+    {% include "Website/style_bawah_halaman.html" %}

@@ -1,0 +1,83 @@
+{% include "style_atas.html" %}
+  <div class="main-panel">        
+        <div class="content-wrapper">
+            <div class="row ">
+              <div class="col-xl-12 grid-margin stretch-card flex-column">
+               <h5 class="mb-2 text-titlecase mb-4"><i class="fa fa-file"></i> Form Tabel Data Kambing</h5>               
+                <div class="card ">         
+                <di align="right" class="blockquote">
+                  <a href="{% url 'Tambah_kambing' %}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Input Data</a>
+                  <a href="{% url 'Kambing' %}" class="btn btn-sm btn-warning"><i class="fa fa-refresh"></i></a>
+                  <form method="post">
+                     {% csrf_token %}
+                     <label class="text-muted">Pilih Data Berdasarkan Jenis</label><br>
+                     <label><input type="radio" name="cari_data" onchange="this.form.submit()" value="Jantan"> <b>Jantan</b></label><br>
+                     <label><input type="radio" name="cari_data" onchange="this.form.submit()" value="Betina"> <b>Betina</b></label>
+                  </form>
+                  </di>         
+                  <div class="card-body">
+                     {% if messages %}
+                     {% for info in messages %}
+                     <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <i class="icofont icofont-close-line-circled"></i>
+                        </button>
+                        <strong>Success!</strong> {{info}} 
+                     </div>
+
+                     {% endfor %}
+                     {% endif %}
+                     <div class="table-responsive">
+                        <table id="datatable" class="table data-table table-bordered table-striped">
+                        <thead class="table-info">
+                           <tr>
+                              <th>No</th>
+                              <th>Status</th>
+                              <th>Usia</th>
+                              <th class="text-center">Jenis</th>
+                              <th>Tingg (Cm)</th>
+                              <th>Harga</th>
+                              <th>Stock</th>
+                              <th>Foto</th>
+                              <th>Keterangan</th>
+                              <th>Aksi</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for tampil in Tampil %}
+                           <tr>
+                              <td>{{forloop.counter}}</td>
+                              <td>{{tampil.status}}</td>
+                              <td>{{tampil.usia}}</td>
+                              <td>{{tampil.jenis}}</td>
+                              <td>{{tampil.tinggi}}<small>(Cm)</small></td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.harga}}</b></td>
+                              <td>{{tampil.stock}}</td>
+                              <td>
+                                <a href="{{ tampil.foto.url }}" target="_blank">
+                                  <img src="{{ tampil.foto.url }}" style="width: 50px"></a>
+                                  <a href="#" data-toggle="modal" data-target="#default-Modal{{tampil.id}}" class="badge bg-warning">
+                                   <i class="fa fa-pencil"></i>
+                                   </a>
+                              </td>
+                              <td>{{tampil.keterangan}}</td>
+                              <td class="text-center">
+                                 <a href="{% url 'edit_kambing' tampil.id %}" class="btn btn-sm hor-grd btn-primary" onclick="return confirm('Apakah Anda Yakin Ingin Mengedit Data')">
+                                    <i class="fa fa-edit"></i></a>
+                                    <!-- -------------------- -->
+                                    <a href="{% url 'hapus_kambing' tampil.id %}" class="btn btn-sm hor-grd btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data')">
+                                       <i class="fa fa-trash"></i></a>
+                                    </td>
+                                 </tr>
+                                 {% include "Master_data/data_kambing/edit_foto.html" %} 
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+{% include "style_bawah.html" %}

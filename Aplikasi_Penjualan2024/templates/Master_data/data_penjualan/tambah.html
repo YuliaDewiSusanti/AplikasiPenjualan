@@ -1,0 +1,147 @@
+{% include "style_atas.html" %}
+<style type="text/css">
+   hr.style-eight:after {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
+</style>
+<script type="text/javascript">
+  function formatCurrency(num){
+ num = num.toString().replace(/\$|\,/g,'');
+ if(isNaN(num)) num = "0";
+  cents = Math.floor((num*100+0.5)%100);
+  num = Math.floor((num*100+0.5)/100).toString();
+ if(cents < 10) cents = "0" + cents;
+  for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+  num = num.substring(0,num.length-(4*i+3))+'.'+num.substring(num.length-(4*i+3));
+  return (num);
+}
+  function sum(){
+    var jumlah=document.getElementById('jumlah').value;
+    var harga=document.getElementById('harga').value;
+    var hasil =parseInt(jumlah) * parseInt(harga);
+    // ubah stock
+    var stock=document.getElementById('stock').value;
+    var hasil_stock =parseInt(jumlah) - parseInt(stock);
+
+    if (!isNaN(hasil)){
+      document.getElementById('total').value = hasil;
+      document.getElementById('hasil_stock').value = -(hasil_stock);
+    }
+    
+  }
+ 
+</script>
+<div class="main-panel">
+          <div class="content-wrapper">
+         <div class="row">
+            <div class="col-sm-12 col-lg-12">
+               <div class="card">
+                  <div class="card-header d-flex justify-content-between">
+                     <div class="header-title">
+                        <h4 class="card-title"><i class="fa fa-plus"></i> PROSES PENJUALAN KAMBING</h4>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                  <form method="post">
+                     {% csrf_token %}
+                     <div class="form-row">
+                        <div class="col-md-11 mb-3">
+                           <label for="validationCustom01">Select Jenis</label>
+                             <select class="form-control" required name="cari_jenis" onchange="this.form.submit()">
+                                 <optgroup label="Pilih Jenis">
+                                    <option value="">---------</option>
+                                    {% for select in select_jenis %}
+                                    <option>{{select.jenis}}</option>
+                                    {% endfor %}
+                                 </optgroup>
+                              </select>
+                        </div>
+                        <div class="col-md-1 mb-3">
+                           <br>
+                           <a href="{% url 'Tambah_penjualan' %}" class="btn btn-sm btn-warning"><i class="fa fa-refresh"></i></a>
+                        </div>
+                     </div>
+                  </form>
+                  <hr class="style-eight">
+                     {% for tampil in Tampil %}
+                     <div class="row">
+                        <div class="col-lg-6">
+                           <form class="needs-validation" novalidate method="post" enctype="multipart/form-data" action="{% url 'Proses_input_penjualan' %}">
+                              {% csrf_token %}
+                              <input type="hidden" name="id" value="{{tampil.id}}">
+                              <input type="hidden" id="stock" value="{{tampil.stock}}">
+                              <input type="hidden" id="hasil_stock" name="stock">
+                              <div class="form-row">
+                                 <div class="col-md-12 mb-3">
+                                    <label for="validationCustom01">Jenis Kambing <small class="text-warning">Terpilih</small> </label>
+                                    <input type="text" class="form-control" id="validationCustom01"  required name="jenis" value="{{tampil.jenis}}" readonly>
+                                 </div>
+                                 <div class="col-md-6 mb-3">
+                                    <label for="validationCustom01">Jumlah Kambing </label>
+                                    <input type="number" class="form-control" id="jumlah" onclick="sum()" required name="jumlah">
+                                 </div>
+                                 <div class="col-md-6 mb-3">
+                                    <label for="validationCustom01">Harga Kambing </label>
+                                    <input type="hidden" class="form-control" id="harga" onkeyup="sum()" required name="harga" value="{{tampil.harga}}" readonly>
+                                    <!--  -->
+                                    <div class="form-group">
+                                      <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text bg-info text-white">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control text-info uang" value="{{tampil.harga}}" readonly style="font-size: 20px;">
+                                        
+                                      </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12 mb-3">
+                                    <label for="validationCustom01">Total 1</label>
+                                    <div class="form-group">
+                                      <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text bg-info text-white">Rp.</span>
+                                        </div>
+                                        
+                                        <input type="text" class="form-control text-info " name="total" readonly style="font-size: 20px;" id="total">
+                                        
+                                      </div>
+                                    </div>
+                                 </div>
+
+                              </div>
+                              <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Submit</button>
+                              <a href="{% url 'Penjualan' %}" class="btn btn-warning"><i class="fa fa-close"></i> Kembali</a>
+                           </form>
+
+                        </div>
+                        <div class="col-lg-6">
+                           <div class="card">
+                            <div class="card-body">
+                              <h4 class="card-title">{{tampil.jenis}}</h4>
+                              <img src="{{ tampil.foto.url }}" style="width: 50%">
+                              <ul class="list-star">
+                                <li><b>Usia :</b> {{tampil.usia}}</li>
+                                <li><b>Tinggi :</b> {{tampil.tinggi}} <small>(Cm)</small></li>
+                                <li><b>Harga :</b> <small>Rp.</small><b class="uang">{{tampil.harga}}</b></li>
+                                <li><b>Stock :</b> ( {{tampil.stock}} )</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                     </div>
+                     {% endfor %}
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% include "style_bawah.html" %}

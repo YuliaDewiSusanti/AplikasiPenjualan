@@ -1,0 +1,70 @@
+{% include "style_atas.html" %}
+  <div class="main-panel">        
+        <div class="content-wrapper">
+            <div class="row ">
+              <div class="col-xl-12 grid-margin stretch-card flex-column">
+               <h5 class="mb-2 text-titlecase mb-4"><i class="fa fa-file"></i> Form Tabel Data Transaksi Pembayaran Kambing</h5>
+                <div class="card ">         
+                      
+                  <div class="card-body">
+                     {% if messages %}
+                     {% for info in messages %}
+                     <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <i class="icofont icofont-close-line-circled"></i>
+                        </button>
+                        <strong>Success!</strong> {{info}} 
+                     </div>
+
+                     {% endfor %}
+                     {% endif %}
+                     <div class="table-responsive">
+                        <table id="datatable" class="table data-table table-bordered table-striped">
+                        <thead class="table-info">
+                           <tr>
+                              <th>No</th>
+                              <th>Cetak Nota</th>
+                              <th>Pelanggan</th>
+                              <th class="text-center">Jenis</th>
+                              <th>Harga</th>
+                              <th>Jumlah</th>
+                              <th>Total</th>
+                              <th>Bayar</th>
+                              <th>Status (Bayar)</th>
+                              <th>Tgl Transaksi</th>
+                              <th>Aksi</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for tampil in Tampil %}
+                           <tr>
+                              <td>{{forloop.counter}}</td>
+                              <td>
+                                 <a href="{% url 'Cetak_nota' tampil.id %}" class="btn btn-sm hor-grd btn-primary" target="_blank">
+                                    <i class="fa fa-print"></i> Cetak Nota</a>
+                              </td>
+                              <td>{{tampil.pelanggan}}</td>
+                              <td>{{tampil.jenis}}</td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.harga}}</b></td>
+                              <td>{{tampil.jumlah}}</td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.total}}</b></td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.bayar}}</b></td>
+                              <td>{{tampil.status_transfer}}</td>
+                              <td>{{tampil.tgl_transaksi}}</td>
+                              <td class="text-center">
+                                 <a href="{% url 'hapus_transaksi' tampil.id %}" class="btn btn-sm hor-grd btn-danger" onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data')">
+                                 <i class="fa fa-trash"></i>
+                                 </a>
+                                    </td>
+                                 </tr>
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+{% include "style_bawah.html" %}

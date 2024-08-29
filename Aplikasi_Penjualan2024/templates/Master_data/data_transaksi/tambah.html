@@ -1,0 +1,128 @@
+
+{% include "style_atas.html" %}
+<script type="text/javascript">
+  function formatCurrency(num){
+ num = num.toString().replace(/\$|\,/g,'');
+ if(isNaN(num)) num = "0";
+  cents = Math.floor((num*100+0.5)%100);
+  num = Math.floor((num*100+0.5)/100).toString();
+ if(cents < 10) cents = "0" + cents;
+  for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+  num = num.substring(0,num.length-(4*i+3))+'.'+num.substring(num.length-(4*i+3));
+  return (num);
+}
+  function sum(){
+    var total=document.getElementById('total').value;
+    var bayar=document.getElementById('bayar').value;
+    var hasil =parseInt(total) - parseInt(bayar);
+    if (!isNaN(hasil)){
+      document.getElementById('gran_total').value = hasil;
+    }
+    document.getElementById('gran_total1').innerHTML  = formatCurrency(hasil);
+    
+  }
+</script>
+
+
+<div class="main-panel">
+          <div class="content-wrapper">
+         <div class="row">
+            <div class="col-sm-12 col-lg-12">
+               <div class="card">
+                  <div class="card-header d-flex justify-content-between">
+                     <div class="header-title">
+                        <h4 class="card-title"><i class="fa fa-plus"></i> Proses Transaksi Penjualan</h4>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                   <form method="post" enctype="multipart/form-data" action="{% url 'Proses_input_transaksi'%}" name="kalkulator">
+                    {% csrf_token %}
+                   <div class="modal-body">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-md-11">
+                               <label for="validationCustom01">Select Pelanggan</label>
+                                 <select class="form-control" required name="pelanggan">
+                                     <optgroup label="Pilih Pelanggan">
+                                        <option value="">---------</option>
+                                        {% for select in select_pelanggan %}
+                                        <option>{{select.nama_lengkap}}</option>
+                                        {% endfor %}
+                                     </optgroup>
+                                  </select>
+                                  <hr>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                              <label for="validationCustom01">Jenis Kambing <small class="text-warning">Terpilih</small> </label>
+                              <input type="text" class="form-control" id="validationCustom01"  required name="jenis" value="{{tampil.jenis}}" readonly>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                              <label for="validationCustom01">Jumlah Kambing</label>
+                              <input type="text" class="form-control" id="validationCustom01"  required name="jumlah" value="{{tampil.jumlah}}" readonly>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                              <label for="validationCustom01">Harga Kambing </label>
+                              <input type="hidden" class="form-control" id="harga" onkeyup="sum()" required name="harga" value="{{tampil.harga}}" readonly>
+                                    <!--  -->
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text bg-info text-white">Rp.</span>
+                                  </div>
+                                  <input type="text" class="form-control text-info uang" value="{{tampil.harga}}" readonly style="font-size: 20px;">
+                                        
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                              <label for="validationCustom01">Sub Total </label>
+                              <div class="form-group">
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text bg-info text-white">Rp.</span>
+                                  </div>
+                                  <input type="hidden" class="form-control text-info" name="total" readonly style="font-size: 20px;" id="total" onkeyup="sum()" value="{{tampil.total}}">
+                                  <input type="text" class="form-control text-info uang" name="total" readonly style="font-size: 20px;"  value="{{tampil.total}}">
+                                        
+                                </div>
+                              </div>
+                          </div>
+                           <div class="col-md-4 mb-3">
+                              <label for="validationCustom01">Transaksi Pembayaran Kambing</label>
+                              <input type="text" class="form-control" id="bayar"  required name="bayar" placeholder="0" onkeyup="sum()">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                              <label for="validationCustom01">Grand Total</label>
+                              <input type="text" class="form-control" id="gran_total"  required placeholder="0" readonly>
+                            </div>
+                             <div class="col-md-4 mb-3">
+                              <label for="validationCustom01">Status Pembayaran Kambing</label>
+                              <label><input type="radio" name="status_transfer" value="BRI"> Transfer <b>(BRI)</b>
+                                    <img src="/static/icon/bri.png" style="width: 10%;">
+                                </label>
+                                <label><input type="radio" name="status_transfer" value="MANDIRI"> Transfer <b>(MANDIRI)</b>
+                                    <img src="/static/icon/mandiri.png" style="width: 20%;">
+                                </label>
+                                <label><input type="radio" name="status_transfer" value="BNI"> Transfer <b>(BNI)</b>
+                                    <img src="/static/icon/bni.png" style="width: 10%;">
+                                </label>
+                            </div>
+                         
+                        </div>
+                      </div>
+                    </div>
+                   </div>
+                   <div class="modal-footer">
+                   <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                   <button type="submit" class="btn btn-primary waves-effect waves-light ">Save changes</button>
+                 </div>
+                </form>
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include "style_bawah.html" %}

@@ -1,0 +1,105 @@
+  
+  {% include "Website/style_atas_halaman.html" %} 
+<style type="text/css">
+    /* ACTIVE STATE */
+.a_demo_two {
+    background-color:#6fba26;
+    padding:10px;
+    position:relative;
+    font-family: 'Open Sans', sans-serif;
+    font-size:12px;
+    
+    color:#fff;
+    background-image: linear-gradient(bottom, rgb(100,170,30) 0%, rgb(129,212,51) 100%);
+    box-shadow: inset 0px 1px 0px #b2f17f, 0px 6px 0px #3d6f0d;
+    border-radius: 5px;
+}
+
+.a_demo_two:active {
+    top:7px;
+    background-image: linear-gradient(bottom, rgb(100,170,30) 100%, rgb(129,212,51) 0%);
+    box-shadow: inset 0px 1px 0px #b2f17f, inset 0px -1px 0px #3d6f0d;
+    color: #156785;
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
+    background: rgb(44,160,202);
+}
+</style>
+<script type="text/javascript">
+   function sum(){
+    var harga=document.getElementById('harga').value;
+    var jumlah=document.getElementById('jumlah').value;
+    var hasil =parseInt(harga) * parseInt(jumlah);
+    if (!isNaN(hasil)){
+      document.getElementById('total').value = hasil;
+    }
+    
+  }
+</script>
+  <div id="templatemo_main">
+        <div id="sidebar" class="float_l">
+            <div class="sidebar_box"><span class="bottom"></span>
+                <h3>Categories</h3>   
+                <div class="content">
+                    
+                    <ul class="sidebar_list">
+                        {% for select in select_jenis %}
+                        <li class="first">
+                            <form method="get" action="{% url 'Halaman' %}">
+                            <input type="hidden" name="cari_jenis" value="{{select.jenis}}">
+                            <button type="submit" class="btn btn-info" style="width: 100%">{{select.jenis}}</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+        <div id="content" class="float_r">
+            <h1> Jenis Kambing</h1>
+            <div class="product_box">
+                <a href="productdetail.html"><img src="{{ tampil.foto.url }}" alt="Shoes 1" style="width:90%" /></a>
+                <div align="left">
+                <p>Silakan proses pemesanan jenis kambing yang telah anda pilih, dan lakukan pembayaran secara transfer.</p>
+                <ol type="1">
+                    <li>Bank BRI</li>
+                    <li>Bank BNI</li>
+                    <li>Bank BTN</li>
+                </ol>
+                <p style="color: chocolate;">Lakukan Proses Pembayaran Setelah Melakukan Pemesanan</p>
+                </div>
+            </div>          
+            <div class="product_box" style="width: 300px;">
+                <h3 align="left">Proses Pemesanan Kambing</h3>
+                <div id="contact_form">
+                   <form method="post" name="contact" action="{% url 'simpan_pemesanan' %}">
+                    {% csrf_token %}
+                    {% for data1 in data %}
+                    <input type="hidden" name="noktp" value="{{data1.noktp}}">
+                    <input type="hidden" name="nama_lengkap" value="{{data1.nama_lengkap}}">
+                    <input type="hidden" name="alamat" value="{{data1.alamat}}">
+                    <input type="hidden" name="nohp" value="{{data1.nohp}}">
+                    {% endfor %}
+                    <input type="hidden" name="jenis" value="{{tampil.jenis}}">
+                        <label for="author">Harga Kambing:</label> <input type="number" id="harga" name="harga" class="required input_field" value="{{tampil.harga}}" onkeyup="sum()" readonly />
+                        <div class="cleaner h10"></div>
+
+                        <label for="author">Jumlah Pesanan:</label> <input type="number" id="jumlah" name="jumlah" class="required input_field" placeholder="0" maxlength="16" onclick="sum()" />
+                        <div class="cleaner h10"></div>
+
+                        <label for="author">Total Pesanan:</label> <input type="text" id="total" name="total" class="required input_field" maxlength="16" style="height: 100px; font-size: 25px;" placeholder="0" readonly />
+                        <div class="cleaner h10"></div>
+                        <div align="left">
+                        <button type="submit" class="a_demo_two">Pesan Sekarang</button>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+            
+        </div>
+
+        <div class="cleaner"></div>
+    </div> <!-- END of templatemo_main -->
+
+    
+    {% include "Website/style_bawah_halaman.html" %}

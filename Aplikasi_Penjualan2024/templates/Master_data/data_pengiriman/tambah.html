@@ -1,0 +1,51 @@
+ <div class="modal fade" id="bs-example-modal-lg{{tampil.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="myModalLabel">Proses Pengiriman Pemesanan Kambing Ke-Pelanggan</h4>
+                        </div>
+                        <form method="post" action="{% url 'simpan_pengiriman' %}">
+                          {% csrf_token %}
+                          <input type="hidden" name="jenis" value="{{tampil.jenis}}">
+                          <input type="hidden" name="noktp" value="{{tampil.noktp}}">
+                          <input type="hidden" name="nama_lengkap" value="{{tampil.nama_lengkap}}">
+                          <input type="hidden" name="alamat" value="{{tampil.alamat}}">
+                          <input type="hidden" name="nohp" value="{{tampil.nohp}}">
+                          <input type="hidden" name="harga" value="{{tampil.harga}}">
+                          <input type="hidden" name="total" value="{{tampil.total}}">
+                          <input type="hidden" name="jumlah" value="{{tampil.jumlah}}">
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <h6>Jenis Kambing : <b>{{tampil.jenis}}</b></h6>
+                              <div style="border: 1px solid #444; line-height: 1.4em; background-color: #f2f2f2; padding: 10px;">
+                                  <label>Jumlah Yang Di Pesan : {{tampil.jumlah}}</label><br>
+                                  <label>Harga Kambing: <small>Rp.</small> <b class="uang">{{tampil.harga}}</b></label><br>
+                                  <label>Sub-Total Kambing: <small>Rp.</small> <b class="uang">{{tampil.total}}</b></label><br>
+                                </div>
+                                <hr>
+                                <b>Alamat Tujuan : </b> {{tampil.alamat}}<br>
+                                <b>No-HP : </b> {{tampil.nohp}}
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="card">
+                                <div class="card-body">
+                                  <label for="validationCustom01">Buat Pesanan / Text</label>
+                                  <textarea class="form-control" rows="5" placeholder="Isi Text" name="pesan"></textarea>
+                                  <label>Tentukan Tanggal Pengiriman</label>
+                                  <input type="date" name="tgl_pengiriman" class="form-control" required>
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>

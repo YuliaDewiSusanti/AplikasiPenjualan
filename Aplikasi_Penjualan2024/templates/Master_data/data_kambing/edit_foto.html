@@ -1,0 +1,39 @@
+<div class="modal fade" id="default-Modal{{tampil.id}}" tabindex="-1" role="dialog">
+         <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                   <h4 class="modal-title">EDIT FOTO DATA KAMBING</h4>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                   </button>
+                   </div>
+                   <form method="post" enctype="multipart/form-data" action="{% url 'Edit_foto_kambing' tampil.id %}">
+                    {% csrf_token %}
+                   <div class="modal-body">
+                    <div class="row">
+                    
+                    <div class="col-sm-12">
+                    <div class="add-img-user profile-img-edit">
+                        <div align="center">
+                        <img class="profile-pic img-fluid" src="{{ tampil.foto.url }}" alt="profile-pic"><br>
+                        <b>Jenis :</b> {{tampil.jenis}}<br>
+                        <b>Keterangan :</b> {{tampil.keterangan}}
+                        </div>
+
+                        <a href="javascript:void();" class="upload-button btn iq-bg-primary" style="font-size: 20px;">Pilih File</a>
+                        <div class="p-image">
+                          <i class="fa fa-upload"></i>
+                          <input class="file-upload" type="file" name="foto" required accept="image/*">
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                   </div>
+                   <div class="modal-footer">
+                   <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">Close</button>
+                   <button type="submit" class="btn btn-primary waves-effect waves-light ">Save changes</button>
+                 </div>
+                </form>
+              </div>
+           </div>
+        </div>

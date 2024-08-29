@@ -1,0 +1,83 @@
+<!-- templatemo 367 shoes -->
+<!-- 
+Shoes Template 
+http://www.templatemo.com/preview/templatemo_367_shoes 
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Website Pemesanan</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="/static/web/templatemo_style.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="/static/web/nivo-slider.css" type="text/css" media="screen" />
+
+<link rel="stylesheet" type="text/css" href="/static/web/css/ddsmoothmenu.css" />
+
+<script type="text/javascript" src="/static/web/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/web/js/ddsmoothmenu.js"></script>
+
+<script type="text/javascript">
+
+ddsmoothmenu.init({
+	mainmenuid: "top_nav", //menu DIV id
+	orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	classname: 'ddsmoothmenu', //class added to menu's outer DIV
+	//customtheme: ["#1c5a80", "#18374a"],
+	contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+})
+
+</script>
+<style type="text/css">
+#site_title1 { float: left; margin-top: 30px; }
+#site_title1 h1 { margin: 0; padding: 0 }
+#site_title1 h1 a { display: block; width: 300px; height: 40px; padding-top: 30px; font-size: 12px; letter-spacing: 4px; color: #2f2f2f; text-align: left; background: url(/static/icon/templatemo_logo.png) no-repeat top left }
+</style>
+</head>
+
+<body>
+
+<div id="templatemo_body_wrapper">
+<div id="templatemo_wrapper">
+
+	<div id="templatemo_header1" style="width: 960px; height: 70px; padding: 30px 10px; background: url(/static/icon/templatemo_header_b.png) no-repeat bottom; ">
+    	<div id="site_title1"><h1><a href="#">Online Penjualan Kambing</a></h1></div>
+        <div id="header_right">
+        	<!-- <p>
+	        <a href="#">My Account</a> | <a href="#">My Wishlist</a> | <a href="#">My Cart</a> | <a href="#">Checkout</a> | <a href="#">Log In</a></p> -->
+            <!-- <p>
+            	Shopping Cart: <strong>3 items</strong> ( <a href="shoppingcart.html">Show Cart</a> )
+			</p> -->
+		</div>
+        <div class="cleaner"></div>
+    </div> <!-- END of templatemo_header -->
+    
+    <div id="templatemo_menubar">
+    	<div id="top_nav" class="ddsmoothmenu">
+            <ul>
+                <li><a href="{% url 'Website' %}" class="selected">Home</a></li>
+                <!-- <li><a href="products.html">Products</a>
+                    <ul>
+                        <li><a href="#submenu1">Sub menu 1</a></li>
+                        <li><a href="#submenu2">Sub menu 2</a></li>
+                        <li><a href="#submenu3">Sub menu 3</a></li>
+                        <li><a href="#submenu4">Sub menu 4</a></li>
+                        <li><a href="#submenu5">Sub menu 5</a></li>
+                  </ul>
+                </li> -->
+                <li><a href="{% url 'registrasi' %}">Registrasi</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <!-- <li><a href="contact.html">Contact Us</a></li> -->
+            </ul>
+            <br style="clear: left" />
+        </div> <!-- end of ddsmoothmenu -->
+        <div id="templatemo_search">
+            <form action="{% url 'Website' %}" method="post">
+                {% csrf_token %}
+              <input type="text" placeholder="Cari Jenis" name="cari_jenis" id="keyword" title="keyword" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
+              <input type="submit" value=" " alt="Search" id="searchbutton" title="Search" class="sub_btn"  />
+            </form>
+        </div>
+    </div> <!-- END of templatemo_menubar -->

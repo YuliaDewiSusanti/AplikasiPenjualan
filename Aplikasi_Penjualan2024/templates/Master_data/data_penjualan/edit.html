@@ -1,0 +1,136 @@
+{% include "style_atas.html" %}
+
+<style type="text/css">
+   hr.style-eight:after {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
+</style>
+<script type="text/javascript">
+  function formatCurrency(num){
+ num = num.toString().replace(/\$|\,/g,'');
+ if(isNaN(num)) num = "0";
+  cents = Math.floor((num*100+0.5)%100);
+  num = Math.floor((num*100+0.5)/100).toString();
+ if(cents < 10) cents = "0" + cents;
+  for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+  num = num.substring(0,num.length-(4*i+3))+'.'+num.substring(num.length-(4*i+3));
+  return (num);
+}
+  function sum(){
+    var jumlah=document.getElementById('jumlah').value;
+    var harga=document.getElementById('harga').value;
+    var hasil =parseInt(jumlah) * parseInt(harga);
+    if (!isNaN(hasil)){
+      document.getElementById('total').value = formatCurrency(hasil);
+    }
+    document.getElementById('total_1').innerHTML  = formatCurrency(hasil);
+    
+  }
+</script>
+<div class="main-panel">
+          <div class="content-wrapper">
+         <div class="row">
+            <div class="col-sm-12 col-lg-8">
+               <div class="card">
+                  <div class="card-header d-flex justify-content-between">
+                     <div class="header-title">
+                        <h4 class="card-title"><i class="fa fa-plus"></i> PROSES EDIT PENJUALAN KAMBING</h4>
+                     </div>
+                  </div>
+                  <div class="card-body">
+                 
+                  <hr class="style-eight">
+                     <div class="row">
+                        <div class="col-lg-12">
+                           <form class="needs-validation" novalidate method="post" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <div class="form-row">
+                                 <div class="col-md-12 mb-3">
+                                    <label for="validationCustom01">Jenis Kambing <small class="text-warning">Terpilih</small> </label>
+                                    <input type="text" class="form-control" id="validationCustom01"  required name="jenis" value="{{edit_data.jenis}}" readonly>
+                                 </div>
+                                 <div class="col-md-6 mb-3">
+                                    <label for="validationCustom01">Jumlah Kambing </label>
+                                    <input type="number" class="form-control" id="jumlah" onclick="sum()" required name="jumlah" value="{{edit_data.jumlah}}">
+                                 </div>
+                                 <div class="col-md-6 mb-3">
+                                    <label for="validationCustom01">Harga Kambing </label>
+                                    <input type="hidden" class="form-control" id="harga" onkeyup="sum()" required name="harga" value="{{edit_data.harga}}" readonly>
+                                    <!--  -->
+                                    <div class="form-group">
+                                      <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text bg-info text-white">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control text-info uang" value="{{edit_data.harga}}" readonly style="font-size: 20px;">
+                                        
+                                      </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12 mb-3">
+                                    <label for="validationCustom01">Total </label>
+                                    <div class="form-group">
+                                      <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text bg-info text-white">Rp.</span>
+                                        </div>
+                                        <input type="text" class="form-control text-info uang" name="total" readonly style="font-size: 20px;" id="total">
+                                        
+                                      </div>
+                                    </div>
+                                 </div>
+
+                              </div>
+                              <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Submit</button>
+                              <a href="{% url 'Penjualan' %}" class="btn btn-warning"><i class="fa fa-close"></i> Kembali</a>
+                           </form>
+
+                        </div>
+                       
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% include "style_bawah.html" %}s" placeholder="Masukkan Jenis" value="{{edit_data.jenis}}">
+                              <div class="valid-feedback">
+                                 Jenis Harus Di Isi
+                              </div>
+                           </div>
+                           <div class="col-md-12 mb-3">
+                              <label for="validationCustom01">Harga Di Jual</label>
+                              <input type="number" class="form-control" id="validationCustom01"  required name="harga" placeholder="Masukkan Harga" value="{{edit_data.harga}}">
+                              <div class="valid-feedback">
+                                 Harga Harus Di Isi
+                              </div>
+                           </div>
+                           <div class="col-md-12 mb-3">
+                              <label for="validationCustom01">Satuan Kambing</label>
+                              <input type="text" class="form-control" id="validationCustom01"  required name="satuan" placeholder="Masukkan Satuan Kambing" value="{{edit_data.satuan}}">
+                              <div class="valid-feedback">
+                                 Satuan Kambing Harus Di Isi
+                              </div>
+                           </div>
+                           
+
+                        </div>
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Submit</button>
+                        <a href="{% url 'Jenis' %}" class="btn btn-warning"><i class="fa fa-close"></i> Kembali</a>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% include "style_bawah.html" %}

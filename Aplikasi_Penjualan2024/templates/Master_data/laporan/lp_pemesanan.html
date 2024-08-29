@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Laporan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css" rel="nofollow">
+<style>
+    @page { size: A3 }
+  
+    h1 {
+        font-weight: bold;
+        font-size: 20pt;
+        text-align: center;
+    }
+  
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+  
+    .table th {
+        padding: 8px 8px;
+        border:1px solid #000000;
+        text-align: center;
+    }
+  
+    .table td {
+        padding: 3px 3px;
+        border:1px solid #000000;
+    }
+  
+    .text-center {
+        text-align: center;
+    }
+</style>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #6a88ab;
+  color: white;
+}
+
+.myDiv {
+  border: 5px outset ;
+  text-align: center;
+}
+hr{
+height: 10px;
+border: 0;
+box-shadow: 0 10px 10px -10px #8c8c8c inset;
+}
+</style>
+</head>
+<body class="A3">
+    <section class="sheet padding-10mm">
+<div id="container">
+   <table>
+      <tr><td style="width:10px"></td>
+         <td style="width: 10px">
+          <img src="/static/icon/logo2.png" style="width: 60px;"></td>
+         <td align="center">
+            <h1 align="center">   
+                <strong style="font-family:'Times New Roman', Times, serif">      
+              UD. Putra Alam Situbondo</strong>
+              <p style="font-size: 12px;">LAPORAN DATA PEMESANAN</p>
+            </h1>
+            <small>Jl.Situ bondo, kabupaten situbondo</small>
+            
+         </td>
+      </tr>
+   </table>
+  <hr>
+  <div id="body">
+    
+        <table class="table" id="customers" >
+                        <thead class="table-info">
+                           <tr>
+                              <th>No</th>
+                              <th>No-KTP</th>
+                              <th>Pelanggan</th>
+                              <th>Alamat</th>
+                              <th class="text-center">Jenis</th>
+                              <th>Harga</th>
+                              <th>Jumlah Pesanan</th>
+                              <th>Total</th>
+                              <th>Tgl Pesan</th>
+                              <th>Status</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for tampil in Tampil %}
+                           <tr>
+                              <td>{{forloop.counter}}</td>
+                              <td>{{tampil.noktp}}</td>
+                              <td>{{tampil.nama_lengkap}}</td>
+                              <td>{{tampil.alamat}}</td>
+                              <td>{{tampil.jenis}}</td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.harga}}</b></td>
+                              <td>{{tampil.jumlah}}</td>
+                              <td><small>Rp.</small><b class="uang">{{tampil.total}}</b></td>
+                              <td>{{tampil.tgl_pesanan}}</td>
+                              <td>{{tampil.status}}
+                                 
+                              </td>
+                                 </tr>
+                                 {% endfor %}
+                              </tbody>
+                           </table>
+                            <div align="right">
+                      <h4>TTD, {{tanggal_sekarang}}</h4><br><br>
+                      <h4>(.........................)</h4>
+                    </div>
+                 
+   </section>
+</body>
+<script type="text/javascript">print();</script>
+<script src="/static/format_rp_css/jqurey_format.js"></script>
+<script src="/static/format_rp_css/jquery.mask.min.js"></script>
+<script src="/static/format_rp_css/js_format.js"></script>
+</html>

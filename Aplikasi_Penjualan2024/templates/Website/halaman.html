@@ -1,0 +1,54 @@
+  
+  {% include "Website/style_atas_halaman.html" %} 
+
+  <div id="templatemo_main">
+        <div id="sidebar" class="float_l">
+            <div class="sidebar_box"><span class="bottom"></span>
+                <h3>Categories</h3>   
+                <div class="content">
+                    
+                    <ul class="sidebar_list">
+                        {% for select in select_jenis %}
+                        <li class="first">
+                            <form method="get" >
+                            <input type="hidden" name="cari_jenis" value="{{select.jenis}}">
+                            <button type="submit" class="btn btn-info" style="width: 100%">{{select.jenis}}</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        
+        </div>
+        <div id="content" class="float_r">
+            <!-- <div id="slider-wrapper">
+                <div id="slider" class="nivoSlider">
+                    <img src="/static/icon/bg1.png" alt="" style="width: 50%;" />
+                    <a href="#">
+                        <img src="/static/icon/bg5.avif" alt="" title="This is an example of a caption" style="width: 50%;"/></a>
+                    <img src="/static/icon/bg3.avif" alt="" style="width: 50%;"/>
+                    <img src="/static/icon/bg4.avif" alt="" title="#htmlcaption" style="width: 50%;"/>
+                </div>
+                <div id="htmlcaption" class="nivo-html-caption">
+                    <strong>This</strong> is an example of a <em>HTML</em> caption with <a href="#">a link</a>.
+                </div>
+            </div> -->
+            
+            <h1>New Products</h1>
+            {% for tampil in Tampil %}
+            <div class="product_box">
+                <h3>{{tampil.jenis}}</h3>
+                <a href="{{ tampil.foto.url }}"><img src="{{ tampil.foto.url }}" style="width:70%" alt="Shoes 1" /></a>
+                <p>{{tampil.keterangan}}</p>
+                <p class="product_price">Rp. <b class="uang">{{tampil.harga }}</b></p>
+                <a href="{% url 'detail_halaman' tampil.id %}" class="detail"></a>
+            </div>   
+            {% endfor %}
+            
+
+        </div> 
+        <div class="cleaner"></div>
+    </div> <!-- END of templatemo_main -->
+    
+    {% include "Website/style_bawah_halaman.html" %}

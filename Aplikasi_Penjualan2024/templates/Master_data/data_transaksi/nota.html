@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Laporan</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css" rel="nofollow">
+<style>
+  .shadowbox {
+  width: 15em;
+  border: 1px solid #333;
+  box-shadow: 8px 8px 5px #444;
+  padding: 8px 12px;
+  background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);
+}
+    @page { size: A4 }
+  
+    h1 {
+        font-weight: bold;
+        font-size: 20pt;
+        text-align: center;
+    }
+  
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+  
+    .table th {
+        padding: 8px 8px;
+        border:1px solid #000000;
+        text-align: center;
+    }
+  
+    .table td {
+        padding: 3px 3px;
+        border:1px solid #000000;
+    }
+  
+    .text-center {
+        text-align: center;
+    }
+</style>
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #466282;
+  color: white;
+}
+
+.myDiv {
+  border: 5px outset ;
+  text-align: center;
+}
+hr{
+height: 10px;
+border: 0;
+box-shadow: 0 10px 10px -10px #8c8c8c inset;
+}
+#fieldset {
+  background-color: #eeeeee;
+}
+
+#legend {
+  background-color: gray;
+  color: white;
+  padding: 5px 10px;
+}
+#fieldset2 {
+  font-size:13px;
+  padding:10px;
+  text-align:center;
+}
+#legend2 {
+    background-color: #537782;
+    color: #fff;
+    padding: 3px 6px;
+}
+</style>
+</head>
+<body class="A4">
+
+
+    <section class="sheet padding-10mm">
+<div id="container">
+   <table>
+      <tr><td style="width:10px"></td>
+         <td style="width: 10px">
+         <td align="center">
+            <table>
+              <tr>
+                <td>
+                  <img src="/static/icon/logo2.png" style="width: 50px">
+                  <b style="font-size:20px">"UD.Putra Alam Situbondo"</b><br>
+                  JL.Dr.situ bondo, Kab.situ bondo, Prov.Jawa Timur
+                </td>
+                <td>Tanggal <br>Transaksi :</td>
+                <td> {{tampil.tgl_transaksi}}</td>
+              </tr>
+            </table>
+         </td>
+      </tr>
+   </table>
+  <hr>
+<fieldset id="fieldset">
+  <legend id="legend">Transaksi Penjualan:</legend>
+<table>
+    <tr>
+        <td style="font-size: 20px"><b>Jenis</b></td>
+        <td style="font-size: 20px"><b>Pelanggan</b></td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>Jenis Kambing</td><td>:</td><td>{{tampil.jenis}}</td>
+                </tr>
+                <tr>
+                    <td>Jumlah</td><td>:</td><td>{{tampil.jumlah}}</td>
+                </tr>
+                <tr>
+                    <td>Harga</td><td>:</td><td><small>Rp.</small> <b class="uang">{{tampil.harga}}</b></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td>Pelanggan</td><td>:</td><td>{{tampil.pelanggan}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</fieldset>
+
+<div align="right">
+        Total : Rp. <b class="uang">{{tampil.total}}</b><br>
+        Bayar Transaksi : Rp. <b class="uang">{{tampil.bayar}}</b><br>
+         <!-- : Rp. <b><br> -->
+        
+    </h4>
+</div>
+<fieldset id="fieldset2">
+    <legend id="legend2">Informasi Transaksi</legend>
+    <b>Transaksi  :</b> kambing yang sudah terjual tidak dapat dikembalikan, diwajibkan mengkonfirmasi kecacatan pada jenis kambing / ketidak sesuaian dengan jenis kambing.
+</fieldset>
+
+  <div align="right">
+                      <h4>TTD, {{tanggal_sekarang}}</h4><br><br>
+                      <h4>(.........................)</h4>
+                    </div>
+                 
+   </section>
+<script type="text/javascript">print()</script>
+<script src="/static/format_rp_css/jqurey_format.js"></script>
+<script src="/static/format_rp_css/jquery.mask.min.js"></script>
+<script src="/static/format_rp_css/js_format.js"></script>
+</body>
+</html>
